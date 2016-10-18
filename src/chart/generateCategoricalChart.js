@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { scaleLinear, scaleBand, scalePoint } from 'd3-scale';
+import { scaleLinear, scaleBand, scalePoint, scaleTime } from 'd3-scale';
 import classNames from 'classnames';
 import Surface from '../container/Surface';
 import Layer from '../container/Layer';
