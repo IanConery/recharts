@@ -167,13 +167,17 @@ const generateCategoricalChart = (ChartComponent, GraphicalChild) => {
               displayedData, items.filter(entry => entry.props[axisIdKey] === axisId), type
             );
           }
-          if (type === 'number') {
+          if (type === 'number' || type === 'time') {
             // To detect wether there is any reference lines whose props alwaysShow is true
             domain = detectReferenceElementsDomain(children, domain, axisId, axisType);
 
             if (child.props.domain) {
               domain = parseSpecifiedDomain(child.props.domain, domain, allowDataOverflow);
             }
+            if(type === 'time' && child.props.domain){
+              domain = child.props.domain;
+            }
+
           }
 
           return {
@@ -299,8 +303,10 @@ const generateCategoricalChart = (ChartComponent, GraphicalChild) => {
 
         if (type === 'number') {
           scale = scaleLinear().domain(domain).range(range);
-        } else if (displayName.indexOf('LineChart') >= 0 ||
-          displayName.indexOf('AreaChart') >= 0) {
+          //added the check for type time Ian
+        } else if (type === 'time') {
+          scale = scaleTime().domain(domain).range(range);
+        } else if (displayName.indexOf('LineChart') >= 0 || displayName.indexOf('AreaChart') >= 0) {
           scale = scalePoint().domain(domain).range(range);
         } else {
           scale = scaleBand().domain(domain).range(range);

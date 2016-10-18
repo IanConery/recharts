@@ -170,6 +170,7 @@ export const getStackedDataOfItem = (item, stackGroups) => {
  * @return {Array} domain
  */
 export const calculateDomainOfTicks = (ticks, type) => {
+
   if (type === 'number') {
     return [Math.min.apply(null, ticks), Math.max.apply(null, ticks)];
   }
@@ -185,7 +186,7 @@ export const calculateDomainOfTicks = (ticks, type) => {
  * @return {Array} Domain of data
  */
 export const getDomainOfDataByKey = (data, key, type) => {
-  if (type === 'number') {
+  if (type === 'number' || type === 'time') {
     const domain = data
       .map(entry => entry[key])
       .filter(_.isNumber);

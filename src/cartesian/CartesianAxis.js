@@ -285,6 +285,9 @@ class CartesianAxis extends Component {
       ...axisProps, fill: 'none', ...getPresentationAttributes(tickLine),
     };
     const items = finalTicks.map((entry, i) => {
+      if(entry.value && entry.value instanceof Date){
+        entry.value = (entry.value).toString();
+      }
       const lineCoord = this.getTickLineCoord(entry);
       const tickProps = {
         textAnchor,
@@ -354,6 +357,7 @@ class CartesianAxis extends Component {
     }
 
     return (
+
       <Layer className="recharts-cartesian-axis">
         {axisLine && this.renderAxisLine()}
         {this.renderTicks()}

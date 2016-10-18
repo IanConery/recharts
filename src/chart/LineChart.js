@@ -54,6 +54,7 @@ class LineChart extends Component {
     const { layout, dataStartIndex, dataEndIndex, isComposed } = this.props;
     const data = this.props.data.slice(dataStartIndex, dataEndIndex + 1);
     const bandSize = getBandSizeOfScale(layout === 'horizontal' ? xAxis.scale : yAxis.scale);
+    const xAxisType = xAxis.type;
     const xTicks = getTicksOfAxis(xAxis);
     const yTicks = getTicksOfAxis(yAxis);
 
@@ -61,6 +62,14 @@ class LineChart extends Component {
       const value = entry[dataKey];
 
       if (layout === 'horizontal') {
+        if(xAxisType === 'time'){
+          let current = new Date(data[index].timestamp);
+          return {
+            x: xAxis.scale(current) + bandSize / 2,
+            y: _.isNil(value[1]) ? null : yAxis.scale(value[1]),
+            value,
+          }
+        }
         return {
           x: xTicks[index].coordinate + bandSize / 2,
           y: _.isNil(value) ? null : yAxis.scale(value),

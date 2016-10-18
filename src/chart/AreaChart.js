@@ -56,6 +56,7 @@ class AreaChart extends Component {
   getComposedData(xAxis, yAxis, dataKey, stackedData) {
     const { layout, dataStartIndex, dataEndIndex } = this.props;
     const data = this.props.data.slice(dataStartIndex, dataEndIndex + 1);
+    const xAxisType = xAxis.type;
     const xTicks = getTicksOfAxis(xAxis);
     const yTicks = getTicksOfAxis(yAxis);
     const bandSize = getBandSizeOfScale(layout === 'horizontal' ? xAxis.scale : yAxis.scale);
@@ -66,6 +67,15 @@ class AreaChart extends Component {
       const value = hasStack ? stackedData[dataStartIndex + index] : [baseValue, entry[dataKey]];
 
       if (layout === 'horizontal') {
+        //x value must be labled as timestamp
+        if(xAxisType === 'time'){
+          let current = new Date(data[index].timestamp);
+          return {
+            x: xAxis.scale(current) + bandSize / 2,
+            y: _.isNil(value[1]) ? null : yAxis.scale(value[1]),
+            value,
+          }
+        }
         return {
           x: xTicks[index].coordinate + bandSize / 2,
           y: _.isNil(value[1]) ? null : yAxis.scale(value[1]),

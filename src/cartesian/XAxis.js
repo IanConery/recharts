@@ -31,7 +31,8 @@ class XAxis extends Component {
     height: PropTypes.number,
     // The orientation of axis
     orientation: PropTypes.oneOf(['top', 'bottom']),
-    type: PropTypes.oneOf(['number', 'category']),
+    //added the time type Ian
+    type: PropTypes.oneOf(['number', 'category', 'time']),
     // Ticks can be any type when the axis is the type of category
     // Ticks must be numbers when the axis is the type of number
     ticks: PropTypes.array,
